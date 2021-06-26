@@ -8,7 +8,6 @@ import { Button } from '../components/Button'
 import { FormEvent, useState } from 'react'
 import { database } from "../services/firebase";
 import { useAuth } from '../hooks/useAuth'
-import { Header } from "../components/Header"
 
 export function NewRoom () {
 	const [ newRoomName, setNewRoomName ] = useState('');
