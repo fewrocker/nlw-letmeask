@@ -51,7 +51,7 @@ export function Home () {
 						<img src={googleIconImage} alt="Logo da Google" />
 						Crie sua sala com o Google
 					</button>
-					<div className="separator">Ou entre em uma sala</div>
+					<div className="separator"><span>Ou entre em uma sala</span></div>
 					<form onSubmit={handleJoinRoom}>
 						<input 
 							type="text"

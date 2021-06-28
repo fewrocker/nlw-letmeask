@@ -34,6 +34,10 @@ export function useRoom(roomId: string) {
 	const [ title, setTitle ] = useState('');
 	const { user } = useAuth();
 
+	const sortByNumberOfLikes = (questionA:Question, questionB:Question) => {
+		return questionA.likeCount < questionB.likeCount ? 1 : -1;
+	}
+
 	useEffect(() => {
 		const roomRef = database.ref(`rooms/${roomId}`)
 		roomRef.on('value', room => {
@@ -52,8 +56,12 @@ export function useRoom(roomId: string) {
 					userLikeId: Object.entries(value.likes ?? {}).find(([key, like]) => like.authorId === user?.id)?.[0]
 				}
 			 })
+			 const highlightedQuestions = parsedQuestions.filter(question => question.isHighlighted).sort(sortByNumberOfLikes)
+			 const AnsweredQuestions = parsedQuestions.filter(question => question.isAnswered).sort(sortByNumberOfLikes)
+			 const notHighlightedNorAnsweredQuestions = parsedQuestions.filter(question => !question.isHighlighted && !question.isAnswered).sort(sortByNumberOfLikes)
+			 const sortedQuestions = [...highlightedQuestions, ...notHighlightedNorAnsweredQuestions, ...AnsweredQuestions]
 
-			 setQuestions(parsedQuestions);
+			 setQuestions(sortedQuestions);
 			 setTitle(databaseRoom.title)
 		})
 
